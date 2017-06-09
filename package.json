@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Rafer45/soup/issues"
   },
-  "homepage": "https://github.com/Rafer45/soup#readme"
+  "homepage": "https://github.com/Rafer45/soup#readme",
+  "dependencies": {
+    "discord.js": "^11.1.0"
+  }
 }
