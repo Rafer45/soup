@@ -3,7 +3,7 @@ const fs = require('fs')
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
-const token = fs.readFileSync('./api_key.txt', 'utf8');
+const token = fs.readFileSync('./data/api_key.txt', 'utf8');
 
 client.on('ready', () => {
   console.log('I am ready!');
@@ -25,7 +25,7 @@ client.on('message', message => {
   }
 });
 
-bot.on("disconnected", () => {
+client.on("disconnected", () => {
   console.log("Disconnected!");
   process.exit(0);
 });
