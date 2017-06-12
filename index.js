@@ -1,5 +1,5 @@
 
-
+const fs = require('fs')
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
@@ -26,10 +26,23 @@ client.on('message', (message) => {
   }
 
   if (msg.isCommand('echo')) {
-    if (msg.length > 5) { // If msg is starts with 'echo '
-      message.channel.send(msg.slice(5));   // Echo the rest of msg.
+    // If msg is starts with 'echo '
+    if (msg.length > 5) {
+      message.channel.send(msg.slice(5));
     } else {
-      message.channel.send("Please provide valid text to echo!");
+      message.channel.send("Please provide valid text to echo.");
+    }
+  }
+
+  if (msg.isCommand('prefix')) {
+    // If msg is starts with 'prefix '
+    if (msg.length > 7) {
+      let newPrefix = msg.split(' ')[1];
+      config.prefix = newPrefix;
+      fs.writeFile("./config.json", JSON.stringify(config), err => console.error);
+      message.channel.send(`Prefix successfully set to '${newPrefix}'`)
+    } else {
+      message.channel.send("Please provide a valid prefix.");
     }
   }
 
