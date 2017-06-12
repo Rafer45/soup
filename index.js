@@ -5,6 +5,7 @@ const config = require("./config.json");
 
 client.on('ready', () => {
   console.log("I am ready!");
+  // client.channels.get('spam').send("Soup is ready!")
 });
 
 client.on('message', (message) => {
@@ -25,6 +26,7 @@ client.on('message', (message) => {
   }
 
   if (msg.startsWith('die')) {
+    message.channel.send("Shutting down...");
     client.destroy((err) => {
       console.log(err);
     });
