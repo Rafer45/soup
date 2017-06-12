@@ -12,7 +12,7 @@ client.on('ready', () => {
 client.on('message', (message) => {
   let prefix = 's.';
 
-  if (!message.content.startsWith(prefix)) return;
+  if (!message.content.startsWith(prefix) || message.author.bot) return;
 
   let msg = message.content.slice(prefix.length);
 
