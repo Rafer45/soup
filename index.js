@@ -34,7 +34,7 @@ client.on('message', (message) => {
   }
 
   if (msg.isCommand('die')) {
-    message.channel.send("Shutting down...");
+    message.channel.send("Emptying can...");
     client.destroy((err) => {
       console.log(err);
     });
