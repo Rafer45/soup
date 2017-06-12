@@ -9,19 +9,21 @@ client.on('ready', () => {
   console.log('I am ready!');
 });
 
-client.on('message', message => {
-  var msg = message.content.toLowerCase();
-  switch(msg) {
-    case 'ping':
-      message.reply('pong');
-      break;
-    case 'die':
-      client.destroy((err) => {
-        console.log(err);
-      });
-      break;
-    default:
-      break;
+client.on('message', (message) => {
+  let prefix = 's.';
+
+  if (!message.content.startsWith(prefix)) return;
+
+  let msg = message.content.slice(prefix.length);
+
+  if (msg.startsWith('ping')) {
+    message.reply('pong');
+  }
+
+  if (msg.startsWith('die')) {
+    client.destroy((err) => {
+      console.log(err);
+    });
   }
 });
 
