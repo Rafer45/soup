@@ -1,5 +1,5 @@
 
-const fs = require('fs')
+const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
@@ -24,6 +24,10 @@ client.on('message', (message) => {
     client.destroy((err) => {
       console.log(err);
     });
+  }
+
+  if (msg.startsWith('echo')) {
+    message.channel.send(message.content);
   }
 });
 
