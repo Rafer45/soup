@@ -19,7 +19,6 @@
   "dependencies": {
     "discord-akairo": "^7.4.2",
     "discord.js": "^11.1.0",
-    "node-opus": "^0.2.6",
     "sqlite": "^2.8.0"
   }
 }
