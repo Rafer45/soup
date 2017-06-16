@@ -11,8 +11,15 @@ String.prototype.isCommand = function(commandString) {
          str.startsWith(commandString + ' ');
 };
 
+
 client.on('ready', () => {
   console.log("I am ready!");
+  client.owner = client.users.get(config.ids.soupmaster);
+  
+  let main   = client.guilds.get(config.ids.main_guild),
+      spam   = main.channels.get(config.ids.spam_channel);
+
+  spam.send(`${client.owner}, soup is ready!`);
 });
 
 client.on('message', (message) => {
@@ -39,7 +46,7 @@ client.on('message', (message) => {
     if (msg.length > 7) {
       let newPrefix = msg.split(' ')[1];
       config.prefix = newPrefix;
-      fs.writeFile("./config.json", JSON.stringify(config), err => console.error);
+      fs.writeFile("./config.json", JSON.stringify(config, null, 4), err => console.error);
       message.channel.send(`Prefix successfully set to '${newPrefix}'`)
     } else {
       message.channel.send("Please provide a valid prefix.");
