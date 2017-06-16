@@ -5,11 +5,11 @@ const client = new Discord.Client();
 
 const config = require("./config.json");
 
-String.prototype.isCommand = function(commandString) {
-  let str = this.valueOf();
-  return str === commandString ||
-         str.startsWith(commandString + ' ');
-};
+// String.prototype.isCommand = function(commandString) {
+//   let str = this.valueOf();
+//   return str === commandString ||
+//          str.startsWith(commandString + ' ');
+// };
 
 
 client.on('ready', () => {
@@ -24,27 +24,28 @@ client.on('ready', () => {
 
 client.on('message', (message) => {
   // Ignore bot messages or messages not starting with prefix
-  if (!message.content.startsWith(config.prefix) || message.author.bot) return;
+  if (!message.content.startsWith(config.prefix) /*|| message.author.bot*/) return;
 
-  let msg = message.content.slice(config.prefix.length);
+  let params  = message.content.slice(config.prefix.length).split(' '),
+      command = params.shift();
 
-  if (msg.isCommand('ping')) {
+  if (command === 'ping') {
     message.reply('pong');
   }
 
-  if (msg.isCommand('echo')) {
-    // If msg is starts with 'echo '
-    if (msg.length > 5) {
-      message.channel.send(msg.slice(5));
+  if (command === 'echo') {
+    // If there are parameters
+    if (params.length > 0) {
+      message.channel.send(message.content.slice(command.length + config.prefix.length));
     } else {
       message.channel.send("Please provide valid text to echo.");
     }
   }
 
-  if (msg.isCommand('prefix')) {
-    // If msg is starts with 'prefix '
-    if (msg.length > 7) {
-      let newPrefix = msg.split(' ')[1];
+  if (command === 'prefix') {
+    // If there are parameters
+    if (params.length > 0) {
+      let newPrefix = params[0];
       config.prefix = newPrefix;
       fs.writeFile("./config.json", JSON.stringify(config, null, 4), err => console.error);
       message.channel.send(`Prefix successfully set to '${newPrefix}'`)
@@ -53,7 +54,7 @@ client.on('message', (message) => {
     }
   }
 
-  if (msg.isCommand('die') && (message.author.id === config.ids.soupmaster)) {
+  if (command === 'die' && message.author.id === config.ids.soupmaster) {
     message.channel.send("Emptying can...")
       .then(() => {
         console.log("Forced to disconnect.");
