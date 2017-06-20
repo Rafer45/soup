@@ -9,8 +9,7 @@ client.on('ready', () => {
     console.log("I am ready!");
     client.owner = client.users.get(config.ids.soupmaster);
     
-    let main   = client.guilds.get(config.ids.main_guild),
-        spam   = main.channels.get(config.ids.spam_channel);
+    let spam = client.channels.get(config.ids.spam_channel);
 
     spam.send(`${client.owner}, soup is ready!`);
 });
