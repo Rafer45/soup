@@ -6,13 +6,6 @@ const client = new Discord.Client();
 const config = require('./config.json');
 const commands = require('./commands.js')
 
-// String.prototype.isCommand = function(commandString) {
-//   let str = this.valueOf();
-//   return str === commandString ||
-//          str.startsWith(commandString + ' ');
-// };
-
-
 client.on('ready', () => {
   console.log("I am ready!");
   client.owner = client.users.get(config.ids.soupmaster);
@@ -37,40 +30,6 @@ client.on('message', (message) => {
   } else {
     message.reply("that's not a valid command.");
   }
-
-  // if (command === 'ping') {
-  //   message.reply('pong');
-  // }
-
-  // if (command === 'echo') {
-  //   // If there are parameters
-  //   if (params.length > 0) {
-  //     message.channel.send(message.content.slice(command.length + config.prefix.length));
-  //   } else {
-  //     message.channel.send("Please provide valid text to echo.");
-  //   }
-  // }
-
-  // if (command === 'prefix') {
-  //   // If there are parameters
-  //   if (params.length > 0) {
-  //     let newPrefix = params[0];
-  //     config.prefix = newPrefix;
-  //     fs.writeFile("./config.json", JSON.stringify(config, null, 4), err => console.error);
-  //     message.channel.send(`Prefix successfully set to '${newPrefix}'`)
-  //   } else {
-  //     message.channel.send("Please provide a valid prefix.");
-  //   }
-  // }
-
-  // if (command === 'die' && message.author.id === config.ids.soupmaster) {
-  //   message.channel.send("Emptying can...")
-  //     .then(() => {
-  //       console.log("Forced to disconnect.");
-  //       process.exit(0);
-  //     });
-  // }
-
 });
 
 client.on('disconnected', () => {
