@@ -1,10 +1,14 @@
 const fs = require('fs');
 
+// Commands are called with the following arguments:
+// commands[command](message, config, msg, ...parameters)
+// msg is the message content without the prefix or command
 module.exports = {
     'ping': (message) => {
         message.reply("pong!");
     },
 
+    // _ denotes arguments we don't care about
     'echo': (message, _, msg) => {
         if (msg) {
             message.channel.send(msg);
