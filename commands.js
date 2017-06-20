@@ -6,13 +6,13 @@ module.exports = {
     },
 
     'echo': (message, _, msg) => {
-        if (message, msg) {
+        if (msg) {
             message.channel.send(msg);
         }
     },
 
     'prefix': (message, config, _, newPrefix) => {
-        if (message, newPrefix) {
+        if (newPrefix) {
             config.prefix = newPrefix;
             fs.writeFile("./config.json", JSON.stringify(config, null, 4), err => console.error);
             message.channel.send(`Prefix successfully set to '${newPrefix}'`)  
@@ -22,7 +22,7 @@ module.exports = {
     },
 
     'die': (message, config) => {
-        if (message, message.author.id === config.ids.soupmaster) {
+        if (message.author.id === config.ids.soupmaster) {
             message.channel.send("Emptying can...")
                 .then(() => {
                     console.log("Forced to disconnect.");
@@ -36,7 +36,7 @@ module.exports = {
             bool2 = (Math.random() > 0.5),
             str;
 
-        if (message, msg) {
+        if (msg) {
             str = `${message.author}'s claim, "${msg}",`
             str = bool1 ? `${str} is obviously ${bool2.toString()}.`
                         : `${str} can't possibly be ${bool2.toString()}.`;
