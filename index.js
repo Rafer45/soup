@@ -7,34 +7,34 @@ const config = require('./config.json');
 const commands = require('./commands.js')
 
 client.on('ready', () => {
-  console.log("I am ready!");
-  client.owner = client.users.get(config.ids.soupmaster);
-  
-  let main   = client.guilds.get(config.ids.main_guild),
-      spam   = main.channels.get(config.ids.spam_channel);
+    console.log("I am ready!");
+    client.owner = client.users.get(config.ids.soupmaster);
+    
+    let main   = client.guilds.get(config.ids.main_guild),
+        spam   = main.channels.get(config.ids.spam_channel);
 
-  spam.send(`${client.owner}, soup is ready!`);
+    spam.send(`${client.owner}, soup is ready!`);
 });
 
 client.on('message', (message) => {
   // Ignore bot messages or messages not starting with prefix
-  if (!message.content.startsWith(config.prefix) || message.author.bot) return;
+    if (!message.content.startsWith(config.prefix) || message.author.bot) return;
 
-  let _content = message.content.slice(config.prefix.length),
-      params   = _content.split(/ +/),
-      command  = params.shift(),
-      msg      = _content.slice(command.length + 1);
+    let _content = message.content.slice(config.prefix.length),
+        params   = _content.split(/ +/),
+        command  = params.shift(),
+        msg      = _content.slice(command.length + 1);
 
-  if (commands[command] !== undefined) {
-    commands[command](message, client.owner, msg, ...params);
-  } else {
-    message.reply("that's not a valid command.");
-  }
+    if (commands[command] !== undefined) {
+        commands[command](message, client.owner, msg, ...params);
+    } else {
+        message.reply("that's not a valid command.");
+    }
 });
 
 client.on('disconnected', () => {
-  console.log("Disconnected!");
-  process.exit(0);
+    console.log("Disconnected!");
+    process.exit(0);
 });
 
 client.login(config.token);
