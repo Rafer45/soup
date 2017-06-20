@@ -19,8 +19,7 @@ client.on('message', (message) => {
     if (!message.content.startsWith(config.prefix) || message.author.bot) return;
 
     let _content = message.content.slice(config.prefix.length),
-        params   = _content.split(/ +/),
-        command  = params.shift(),
+        [command, ...params] = _content.split(/ +/),
         msg      = _content.slice(command.length + 1);
 
     if (commands[command] !== undefined) {
