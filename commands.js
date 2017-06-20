@@ -32,8 +32,8 @@ module.exports = {
     },
 
     'factcheck': (message, _, msg) => {
-        let bool1 = (message, Math.random() > 0.5),
-            bool2 = (message, Math.random() > 0.5),
+        let bool1 = (Math.random() > 0.5),
+            bool2 = (Math.random() > 0.5),
             str;
 
         if (message, msg) {
