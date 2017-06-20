@@ -1,5 +1,4 @@
 
-const fs = require('fs')
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
@@ -26,7 +25,7 @@ client.on('message', (message) => {
         msg      = _content.slice(command.length + 1);
 
     if (commands[command] !== undefined) {
-        commands[command](message, client.owner, msg, ...params);
+        commands[command](message, config, msg, ...params);
     } else {
         message.reply("that's not a valid command.");
     }

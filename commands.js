@@ -1,3 +1,4 @@
+const fs = require('fs');
 
 module.exports = {
     'ping': (message) => {
@@ -5,13 +6,13 @@ module.exports = {
     },
 
     'echo': (message, _, msg) => {
-        if (msg) {
+        if (message, msg) {
             message.channel.send(msg);
         }
     },
 
-    'prefix': (message, _, __, newPrefix) => {
-        if (newPrefix) {
+    'prefix': (message, config, _, newPrefix) => {
+        if (message, newPrefix) {
             config.prefix = newPrefix;
             fs.writeFile("./config.json", JSON.stringify(config, null, 4), err => console.error);
             message.channel.send(`Prefix successfully set to '${newPrefix}'`)  
@@ -20,8 +21,8 @@ module.exports = {
         }
     },
 
-    'die': (message, soupmaster) => {
-        if (message.author.id === soupmaster.id) {
+    'die': (message, config) => {
+        if (message, message.author.id === config.ids.soupmaster) {
             message.channel.send("Emptying can...")
                 .then(() => {
                     console.log("Forced to disconnect.");
@@ -31,11 +32,11 @@ module.exports = {
     },
 
     'factcheck': (message, _, msg) => {
-        let bool1 = (Math.random() > 0.5)
-        let bool2 = (Math.random() > 0.5)
-        let str;
+        let bool1 = (message, Math.random() > 0.5),
+            bool2 = (message, Math.random() > 0.5),
+            str;
 
-        if (msg) {
+        if (message, msg) {
             str = `${message.author}'s claim, "${msg}",`
             str = bool1 ? `${str} is obviously ${bool2.toString()}.`
                         : `${str} can't possibly be ${bool2.toString()}.`;
@@ -47,7 +48,7 @@ module.exports = {
     },
 
     'coin': (message) => {
-        let bool = (Math.random() > 0.5);
+        let bool = (message, Math.random() > 0.5);
         message.channel.send(bool ? "Heads." : "Tails.");
     },
 
