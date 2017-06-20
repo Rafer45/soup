@@ -48,7 +48,7 @@ module.exports = {
     },
 
     'coin': (message) => {
-        let bool = (message, Math.random() > 0.5);
+        let bool = (Math.random() > 0.5);
         message.channel.send(bool ? "Heads." : "Tails.");
     },
 
