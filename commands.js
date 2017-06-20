@@ -31,8 +31,8 @@ module.exports = {
     },
 
     'factcheck': (message, _, msg) => {
-        let bool1 = (Math.random() >= 0.5)
-        let bool2 = (Math.random() >= 0.5)
+        let bool1 = (Math.random() > 0.5)
+        let bool2 = (Math.random() > 0.5)
         let str;
 
         if (msg) {
@@ -40,9 +40,18 @@ module.exports = {
             str = bool1 ? `${str} is obviously ${bool2.toString()}.`
                         : `${str} can't possibly be ${bool2.toString()}.`;
         } else {
-            str = bool1 ? `${message.author} is totally ${bool2 ? "right" : "wrong"}.`
+            str = bool1 ? `${message.author} is always ${bool2 ? "right" : "wrong"}.`
                         : `${message.author} is never ${bool2 ? "right" : "wrong"}.`
         }
         message.channel.send(str);
+    },
+
+    'coin': (message) => {
+        let bool = (Math.random() > 0.5);
+        message.channel.send(bool ? "Heads." : "Tails.");
+    },
+
+    'dice': (message) => {
+        message.channel.send(Math.floor(Math.random()*6) + 1);
     }
 }
