@@ -56,8 +56,8 @@ module.exports = {
         message.channel.send(bool ? "Heads." : "Tails.");
     },
 
-    'dice': (message, _, _, n) => {
-        n = n || 6;
+    'dice': (message, _, __, n) => {
+        n = Math.max(parseInt(n), 0) || 6;
         message.channel.send(Math.floor(Math.random()*n) + 1);
     }
 }
