@@ -19,7 +19,7 @@ module.exports = {
         if (newPrefix) {
             config.prefix = newPrefix;
             fs.writeFile("./config.json", JSON.stringify(config, null, 4), err => console.error);
-            message.channel.send(`Prefix successfully set to '${newPrefix}'`)  
+            message.channel.send(`Prefix successfully set to '${newPrefix}'`)
         } else {
             message.channel.send("Please provide a prefix.");
         }
@@ -56,7 +56,8 @@ module.exports = {
         message.channel.send(bool ? "Heads." : "Tails.");
     },
 
-    'dice': (message) => {
-        message.channel.send(Math.floor(Math.random()*6) + 1);
+    'dice': (message, _, _, n) => {
+        n = n || 6;
+        message.channel.send(Math.floor(Math.random()*n) + 1);
     }
 }
