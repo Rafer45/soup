@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-// Commands are called with the following arguments:
+// Commands are called in the following manner:
 // commands[command](message, config, msg, ...parameters)
 // msg is the message content without the prefix or command
 module.exports = {
@@ -59,5 +59,47 @@ module.exports = {
     'dice': (message, _, __, n) => {
         n = Math.max(parseInt(n), 0) || 6;
         message.channel.send(Math.floor(Math.random()*n) + 1);
+    },
+
+    'effify': (message, _, msg) => {
+        let effify = (str) => {
+            let dict = {
+                'á': 'a',
+                'é': 'e',
+                'í': 'i',
+                'ó': 'o',
+                'ú': 'u',
+                'ï': 'i',
+                'ü': 'u'
+            };
+
+            return str.replace(/[aeiouáéíóúü]/gi, char => (
+                `${char}f${dict[char.toLowerCase()] || char.toLowerCase()}`
+            ));
+        };
+
+        message.channel.send(effify(msg))
     }
+
 }
+
+// function effify(str, f, vowels, layers=1) {
+//     str = str.toLowerCase()
+    
+//     if (layers < 1) {
+//         return str
+//     }
+    
+//     for (let i in vowels) {
+//         str = insertF(vowels[i], str)
+//     }
+
+//     return effify(str, f, vowels, layers - 1)
+    
+//     function insertF(vowel, str) {
+//         return str.split(vowel).join(vowel + f + vowel)
+//     }
+// }
+
+// console.log(effify(input,"f",["a","e","i","o","u",
+//                               "á","é","í","ó","ú"]))
