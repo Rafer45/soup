@@ -18,7 +18,8 @@ module.exports = {
     'prefix': (message, config, _, newPrefix) => {
         if (newPrefix) {
             config.prefix = newPrefix;
-            fs.writeFile("./config.json", JSON.stringify(config, null, 4), err => console.error);
+            fs.writeFile("./config.json", JSON.stringify(config, null, 4)
+                        ,err => console.error);
             message.channel.send(`Prefix successfully set to '${newPrefix}'`)
         } else {
             message.channel.send("Please provide a prefix.");
@@ -82,24 +83,3 @@ module.exports = {
     }
 
 }
-
-// function effify(str, f, vowels, layers=1) {
-//     str = str.toLowerCase()
-    
-//     if (layers < 1) {
-//         return str
-//     }
-    
-//     for (let i in vowels) {
-//         str = insertF(vowels[i], str)
-//     }
-
-//     return effify(str, f, vowels, layers - 1)
-    
-//     function insertF(vowel, str) {
-//         return str.split(vowel).join(vowel + f + vowel)
-//     }
-// }
-
-// console.log(effify(input,"f",["a","e","i","o","u",
-//                               "á","é","í","ó","ú"]))
