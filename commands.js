@@ -19,7 +19,7 @@ module.exports = {
         if (newPrefix) {
             config.prefix = newPrefix;
             fs.writeFile("./config.json", JSON.stringify(config, null, 4)
-                        ,err => console.error);
+                        ,console.error);
             message.channel.send(`Prefix successfully set to '${newPrefix}'`)
         } else {
             message.channel.send("Please provide a prefix.");
