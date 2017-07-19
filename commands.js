@@ -1,4 +1,6 @@
+
 const fs = require('fs');
+const musicCommand = require('./music.js');
 
 // Commands are called in the following manner:
 // commands[command](message, config, msg, ...parameters)
@@ -86,5 +88,5 @@ module.exports = {
         message.channel.send(effify(msg));
     },
 
-}
-;
+    braindeadsong: musicCommand,
+};
