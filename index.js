@@ -19,7 +19,7 @@ client.on('message', (message) => {
 
     const contents = message.content.slice(config.prefix.length);
     const [command, ...params] = contents.split(/ +/);
-    const msg = contents.slice(command.length + 1);
+    const msg = contents.trim().slice(command.length + 1);
 
     if (commands[command] !== undefined) {
         commands[command](message, config, msg, ...params);
