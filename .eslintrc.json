@@ -1,0 +1,15 @@
+{
+    "env": {
+        "node": true
+    },
+    "extends": "airbnb-base",
+    "rules": {
+        "linebreak-style": ["error", "windows"],
+        "indent": ["error", 4],
+        "no-console": 0,
+        "no-eval": "warn",
+        "no-use-before-define": ["error", { "functions": false }],
+        "quote-props": [1, "consistent-as-needed"],
+        "no-param-reassign": 0
+    }
+}
