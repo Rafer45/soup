@@ -1,125 +1,41 @@
 
 // const fs = require('fs');
-// const musicCommand = require('./music.js');
+// const musicCommand = require('./commands/music.js');
 const {
     musicCommands,
     randomnessCommands,
     sillyCommands,
     soupmasterCommands,
     testingCommands,
-} = require('./commands');
+} = require('./commands/');
+
+// console.log(musicCommands);
+
+// const musicCommands = require('./commands/music_commands');
+// const randomnessCommands = require('./commands/randomness_commands');
+// const sillyCommands = require('./commands/silly_commands');
+// const soupmasterCommands = require('./commands/soupmaster_commands');
+// const testingCommands = require('./commands/testing_commands');
 
 // Commands are called in the following manner:
 // commands[command](message, config, msg, ...parameters)
 // msg is the message content without the prefix or command
-module.exports = {
-    // ping: (message) => {
-    //     message.reply('pong!');
-    // },
-    //
-    // // _ denotes arguments we don't care about
-    // echo: (message, _, msg) => {
-    //     if (msg) {
-    //         message.channel.send(msg);
-    //     }
-    // },
+module.exports = {};
 
-    // prefix: (message, config, _, newPrefix) => {
-    //     if (newPrefix) {
-    //         config.prefix = newPrefix;
-    //         fs.writeFile(
-    //             './config.json',
-    //             JSON.stringify(config, null, 4),
-    //             console.error,
-    //         );
-    //         message.channel.send(`Prefix successfully set to '${newPrefix}'`);
-    //     } else {
-    //         message.channel.send('Please provide a prefix.');
-    //     }
-    // },
-    //
-    // die: (message, config) => {
-    //     if (message.author.id === config.ids.soupmaster) {
-    //         message.channel.send('Emptying can...')
-    //             .then(() => {
-    //                 console.log('Forced to disconnect.');
-    //                 process.exit(0);
-    //             });
-    //     }
-    // },
-
-    // factcheck: (message, _, msg) => {
-    //     const bool1 = (Math.random() > 0.5);
-    //     const bool2 = (Math.random() > 0.5);
-    //     let str;
-    //
-    //     if (msg) {
-    //         str = `${message.author}'s claim, "${msg}",`;
-    //         str = bool1 ? `${str} is obviously ${bool2.toString()}.`
-    //                     : `${str} can't possibly be ${bool2.toString()}.`;
-    //     } else {
-    //         str = bool1 ? `${message.author} is always ${bool2 ? 'right' : 'wrong'}.`
-    //                     : `${message.author} is never ${bool2 ? 'right' : 'wrong'}.`;
-    //     }
-    //     message.channel.send(str);
-    // },
-    //
-    // coin: (message) => {
-    //     const bool = (Math.random() > 0.5);
-    //     message.channel.send(bool ? 'Heads.' : 'Tails.');
-    // },
-    //
-    // dice: (message, _, __, n) => {
-    //     n = Math.max(Number(n), 0) || 6;
-    //     message.channel.send(Math.floor(Math.random() * n) + 1)
-    //         .catch(message.channel.send('Input a valid number!'));
-    // },
-
-    // effify: (message, _, msg) => {
-    //     const effify = (str) => {
-    //         const dict = {
-    //             'á': 'a',
-    //             'é': 'e',
-    //             'í': 'i',
-    //             'ó': 'o',
-    //             'ú': 'u',
-    //             'ï': 'i',
-    //             'ü': 'u',
-    //         };
-    //
-    //         return str.replace(/[aeiouáéíóúü]/gi, char => (
-    //             `${char}f${dict[char.toLowerCase()] || char.toLowerCase()}`
-    //         ));
-    //     };
-    //
-    //     message.channel.send(effify(msg));
-    // },
-
-    // braindeadsong: musicCommand,
-};
-
-// function newStaticCommand(k, v) {
-//     module.exports[k] = (message, _, msg) => {
-//         message.edit(`${msg} ${v}`);
-//     };
-// }
-//
-// Object.keys(staticCommands).forEach((k) => {
-//     newStaticCommand(k, staticCommands[k]);
-// });
-
-function defaultAddCommands(...objs) {
+/* eslint dot-notation: "warn" */
+function addCommands(...objs) {
     objs.forEach((obj) => {
-        Object.keys(obj).forEach((k) => {
-            module.exports[k] = obj[k];
+        const fn = obj.fn || (x => x);
+        Object.keys(obj).filter(x => x !== 'fn').forEach((k) => {
+            module.exports[k] = fn(obj[k]);
         });
     });
 }
 
-defaultAddCommands(
+addCommands(
     musicCommands,
     randomnessCommands,
-    sillyCommands,
     soupmasterCommands,
+    sillyCommands,
     testingCommands,
 );

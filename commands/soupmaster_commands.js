@@ -2,6 +2,14 @@
 const fs = require('fs');
 
 module.exports = {
+    fn: command => (
+        (message, config, ...other) => {
+            if (message.author.id === config.ids.soupmaster) {
+                command(message, config, ...other);
+            }
+        }
+    ),
+
     prefix: (message, config, _, newPrefix) => {
         if (newPrefix) {
             config.prefix = newPrefix;
