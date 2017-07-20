@@ -4,7 +4,7 @@
     },
     "extends": "airbnb-base",
     "rules": {
-        "linebreak-style": ["error", "windows"],
+        "linebreak-style": 0,
         "indent": ["error", 4],
         "no-console": 0,
         "no-eval": "warn",
