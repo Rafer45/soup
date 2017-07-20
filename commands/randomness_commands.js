@@ -24,6 +24,6 @@ module.exports = {
     dice: (message, _, __, n) => {
         n = Math.max(Number(n), 0) || 6;
         message.channel.send(Math.floor(Math.random() * n) + 1)
-            .catch(message.channel.send('Input a valid number!'));
+            .catch(() => message.channel.send('Input a valid number!'));
     },
 };
