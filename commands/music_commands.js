@@ -1,7 +1,7 @@
 
 const ytdl = require('ytdl-core');
 
-let queue = {};
+const queue = {};
 
 module.exports = {
     fn: command => (
@@ -39,17 +39,19 @@ module.exports = {
                 );
                 dispatcher.setVolume(config.music.volume);
                 dispatcher.on('end', () => {
-                    if (queue[message.guild.id] && queue[message.guild.id].length > 0) {
-                        const newStream = ytdl(queue[message.guild.id].shift(), {
-                            filter: 'audioonly',
-                        });
-                        c.playStream(
-                            newStream,
-                            { passes: config.music.passes },
-                        ).setVolume(config.music.volume);
-                    } else {
-                        vc.leave();
-                    }
+                    vc.leave().then(() => {
+                        setTimeout(() => {
+                            if (queue[message.guild.id] && queue[message.guild.id].length > 0) {
+                                module.exports.violence(
+                                    voiceConn,
+                                    message,
+                                    config,
+                                    _,
+                                    queue[message.guild.id].shift(),
+                                );
+                            }
+                        }, 500);
+                    });
                 });
                 message.channel.send(`Playing song at url:\n${url}`);
             })
@@ -78,14 +80,14 @@ module.exports = {
             queue[message.guild.id] = [url];
         }
         if (!voiceConn) {
-            module.exports.violence(voiceConn, message, _, config, queue[message.guild.id].shift);
+            module.exports.violence(
+                voiceConn,
+                message,
+                _,
+                config,
+                queue[message.guild.id].shift(),
+            );
         }
         return message.channel.send(`Added this song to the queue:\n${url}`);
-            // .then(() => {
-            //     const dispatcher = voiceConn.dispatcher;
-            //     dispatcher.on('end', () => {
-            //         module.exports.violence(voiceConn, message, config, _, url);
-            //     });
-            // });
     },
 };
