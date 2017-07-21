@@ -1,7 +1,6 @@
 
 const ytdl = require('ytdl-core');
 
-// let queue = {};
 // Most braindead play command possible.
 // Will play a song to its conclusion with no way to stop it.
 // Just a bit of an exercise for now.
@@ -14,10 +13,12 @@ module.exports = {
 
     braindead: (voiceConn, message, config, _, url) => {
         if (voiceConn) {
-            return module.exports.pleasestop
+            return message.channel.send('Interrupting song...')
                 .then(() => {
+                    const dispatcher = voiceConn.dispatcher;
+                    dispatcher.end();
                     setTimeout(() => {
-                        module.exports.braindead(voiceConn, message, config, _, url);
+                        module.exports.braindead(message, config, _, url);
                     }, 500);
                 });
         }
