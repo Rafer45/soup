@@ -1,7 +1,7 @@
 
 const ytdl = require('ytdl-core');
 
-let queue = {};
+// let queue = {};
 // Most braindead play command possible.
 // Will play a song to its conclusion with no way to stop it.
 // Just a bit of an exercise for now.
