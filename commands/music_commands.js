@@ -1,8 +1,10 @@
 
 const ytdl = require('ytdl-core');
 
-const queue = {};
-
+let queue = {};
+// Most braindead play command possible.
+// Will play a song to its conclusion with no way to stop it.
+// Just a bit of an exercise for now.
 module.exports = {
     fn: command => (
         (message, ...other) => {
@@ -10,12 +12,12 @@ module.exports = {
         }
     ),
 
-    violence: (voiceConn, message, config, _, url) => {
+    braindead: (voiceConn, message, config, _, url) => {
         if (voiceConn) {
-            return module.exports.pleasestop(voiceConn, message)
+            return module.exports.pleasestop
                 .then(() => {
                     setTimeout(() => {
-                        module.exports.violence(voiceConn, message, config, _, url);
+                        module.exports.braindead(voiceConn, message, config, _, url);
                     }, 500);
                 });
         }
@@ -39,19 +41,7 @@ module.exports = {
                 );
                 dispatcher.setVolume(config.music.volume);
                 dispatcher.on('end', () => {
-                    vc.leave().then(() => {
-                        setTimeout(() => {
-                            if (queue[message.guild.id] && queue[message.guild.id].length > 0) {
-                                module.exports.violence(
-                                    voiceConn,
-                                    message,
-                                    config,
-                                    _,
-                                    queue[message.guild.id].shift(),
-                                );
-                            }
-                        }, 500);
-                    });
+                    vc.leave();
                 });
                 message.channel.send(`Playing song at url:\n${url}`);
             })
@@ -71,23 +61,5 @@ module.exports = {
             });
         }
         return message.channel.send('Stop what?');
-    },
-
-    play: (voiceConn, message, _, config, url) => {
-        if (queue[message.guild.id]) {
-            queue[message.guild.id].push(url);
-        } else {
-            queue[message.guild.id] = [url];
-        }
-        if (!voiceConn) {
-            module.exports.violence(
-                voiceConn,
-                message,
-                _,
-                config,
-                queue[message.guild.id].shift(),
-            );
-        }
-        return message.channel.send(`Added this song to the queue:\n${url}`);
     },
 };
