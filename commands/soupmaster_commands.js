@@ -13,12 +13,11 @@ module.exports = {
     prefix: (message, config, _, newPrefix) => {
         if (newPrefix) {
             config.prefix = newPrefix;
-            fs.writeFile(
-                './config.json',
-                JSON.stringify(config, null, 4),
-                console.error,
+            writeConfig(
+                message,
+                config,
+                `Prefix successfully set to '${newPrefix}'.`,
             );
-            message.channel.send(`Prefix successfully set to '${newPrefix}'`);
         } else {
             message.channel.send('Please provide a prefix.');
         }
@@ -31,4 +30,27 @@ module.exports = {
                 process.exit(0);
             });
     },
+
+    setpasses: (message, config, _, n) => {
+        n = Number(n);
+        n = Number.isInteger(n) ? n : 1;
+        config.music.passes = n;
+        writeConfig(
+            message,
+            config,
+            `Passes successfully set to '${n}'.`,
+        );
+    },
 };
+
+function writeConfig(message, config, str) {
+    fs.writeFile(
+        './config.json',
+        JSON.stringify(config, null, 4),
+        (err) => {
+            if (err) throw err;
+            message.channel
+                .send(str);
+        },
+    );
+}
