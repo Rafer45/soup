@@ -18,7 +18,10 @@ module.exports = {
 
     coin: (message) => {
         const bool = (Math.random() > 0.5);
-        message.channel.send(bool ? 'Heads.' : 'Tails.');
+        const headsUrl = 'http://www.antheads.co.uk/_/rsrc/1467896244461/catguide/heads/Heads-21-30.jpg';
+        const tailsUrl = 'https://upload.wikimedia.org/wikipedia/en/7/73/Sonicchannel_tails_cg.png';
+        message.channel.send(bool ? `Heads.\n${headsUrl}`
+                                  : `Tails.\n${tailsUrl}`);
     },
 
     dice: (message, _, __, n) => {
