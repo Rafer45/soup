@@ -13,14 +13,21 @@ module.exports = {
 
     braindead: (voiceConn, message, config, _, url) => {
         if (voiceConn) {
+            // return module.exports.pleasestop(voiceConn, message)
+            //     .then(() => {
+            //         setTimeout(() => {
+            //             module.exports.braindead(voiceConn, message, config, _, url);
+            //         }, 1000);
+            //     });
             return message.channel.send('Interrupting song...')
                 .then(() => {
                     const dispatcher = voiceConn.dispatcher;
                     dispatcher.end();
                     setTimeout(() => {
-                        module.exports.braindead(message, config, _, url);
+                        module.exports.braindead(null, message, config, _, url);
                     }, 500);
-                });
+                })
+                .catch(console.error);
         }
 
         const vc = message.member.voiceChannel;
@@ -46,7 +53,10 @@ module.exports = {
                 });
                 message.channel.send(`Playing song at url:\n${url}`);
             })
-            .catch(console.error);
+            .catch((error) => {
+                console.error(error);
+                message.channel.send('Something went wrong. Either the URL is invalid, or soup is having issues.');
+            });
     },
 
     pleasestop: (voiceConn, message) => {
@@ -63,4 +73,10 @@ module.exports = {
         }
         return message.channel.send('Stop what?');
     },
+
+    // time: (voiceConn, message) => {
+    //     if (voiceConn) {
+    //
+    //     }
+    // }
 };
