@@ -10,6 +10,7 @@
         "no-eval": "warn",
         "no-use-before-define": ["error", { "functions": false }],
         "quote-props": [1, "consistent-as-needed"],
-        "no-param-reassign": 0
+        "no-param-reassign": 0,
+        "no-underscore-dangle": 0
     }
 }
