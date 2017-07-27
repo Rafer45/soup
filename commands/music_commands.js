@@ -2,9 +2,7 @@
 const ytdl = require('ytdl-core');
 
 const queues = {};
-// Most braindead play command possible.
-// Will play a song to its conclusion with no way to stop it.
-// Just a bit of an exercise for now.
+
 module.exports = {
     fn: command => (
         (message, ...other) => {
