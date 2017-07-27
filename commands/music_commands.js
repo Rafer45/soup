@@ -13,16 +13,8 @@ module.exports = {
 
     braindead: (voiceConn, message, config, _, url) => {
         if (voiceConn) {
-            // return module.exports.pleasestop(voiceConn, message)
-            //     .then(() => {
-            //         setTimeout(() => {
-            //             module.exports.braindead(voiceConn, message, config, _, url);
-            //         }, 1000);
-            //     });
-            return message.channel.send('Interrupting song...')
+            return module.exports.pleasestop(voiceConn, message)
                 .then(() => {
-                    const dispatcher = voiceConn.dispatcher;
-                    dispatcher.end();
                     setTimeout(() => {
                         module.exports.braindead(null, message, config, _, url);
                     }, 500);
