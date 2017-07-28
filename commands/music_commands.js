@@ -29,28 +29,22 @@ module.exports = {
                     config,
                 ));
     },
-    // enqueue is a mess and I'll fix it later
+
     enqueue: (message, _, __, url) => {
+        queues[message.guild.id] = queues[message.guild.id] || [];
+
         if (url) {
-            ytdl.getInfo(url, (e) => {
+            ytdl.getInfo(url, (e, info) => {
                 if (e) {
-                    url = undefined;
                     message.channel.send('Invalid YouTube URL.');
+                } else {
+                    queues[message.guild.id].push(url);
+                    message.channel.send(`Enqueued *${info.title}*.`);
                 }
             });
         }
 
-        if (queues[message.guild.id]) {
-            if (url) {
-                queues[message.guild.id].push(url);
-            }
-        } else {
-            queues[message.guild.id] = (url ? [url] : []);
-        }
 
-        if (url) {
-            message.channel.send(`Enqueued song at url ${url}.`);
-        }
         return console.log(queues);
     },
 
