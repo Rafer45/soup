@@ -5,47 +5,29 @@ const queues = {};
 
 module.exports = {
     play: (message, config, _, url) => {
-        module.exports.enqueue(message, null, null, url);
-        const voiceConn = message.guild.voiceConnection;
+        enqueue(message, url)
+            .then(() => {
+                const voiceConn = message.guild.voiceConnection;
 
-        if (voiceConn) {
-            return false;
-        }
-
-        const vc = message.member.voiceChannel;
-
-        if (!vc) {
-            return message.reply('Join a voice channel before using the command.');
-        }
-
-        if (queues[message.guild.id].length === 0) {
-            return message.reply(`No songs in queue. Add songs with \`${config.prefix}enqueue\` or provide a url.`);
-        }
-        return vc.join()
-            .then(dispatch.bind(
-                    null,
-                    message,
-                    queues[message.guild.id].shift(),
-                    config,
-                ));
-    },
-
-    enqueue: (message, _, __, url) => {
-        queues[message.guild.id] = queues[message.guild.id] || [];
-
-        if (url) {
-            ytdl.getInfo(url, (e, info) => {
-                if (e) {
-                    message.channel.send('Invalid YouTube URL.');
-                } else {
-                    queues[message.guild.id].push(url);
-                    message.channel.send(`Enqueued *${info.title}*.`);
+                if (voiceConn) {
+                    return false;
                 }
-            });
-        }
 
+                const vc = message.member.voiceChannel;
 
-        return console.log(queues);
+                if (!vc) {
+                    return message.reply('Join a voice channel before using the command.');
+                }
+
+                return vc.join()
+                    .then(dispatch.bind(
+                            null,
+                            message,
+                            queues[message.guild.id].shift().url,
+                            config,
+                        ));
+            })
+            .catch(console.error);
     },
 
     stop: (message) => {
@@ -77,6 +59,19 @@ module.exports = {
             }).catch(reject);
         })
     ),
+
+    queue: (message) => {
+        const q = queues[message.guild.id] || [];
+        if (q.length === 0) {
+            message.channel.send('Queue is empty');
+        } else {
+            const cb = '```';
+            const qStr = q.map(elem => (
+                `${elem.title} - Requested by ${elem.requester}`
+            )).join('\n');
+            message.channel.send(`${cb}${qStr}${cb}`);
+        }
+    },
 };
 
 function dispatch(message, url, config, connection) {
@@ -93,7 +88,7 @@ function dispatch(message, url, config, connection) {
             setTimeout(() => {
                 dispatch(
                         message,
-                        queues[message.guild.id].shift(),
+                        queues[message.guild.id].shift().url,
                         config,
                         connection,
                     );
@@ -105,4 +100,25 @@ function dispatch(message, url, config, connection) {
         }
     });
     message.channel.send(`Playing song at url:\n${url}`);
+}
+
+function enqueue(message, url) {
+    queues[message.guild.id] = queues[message.guild.id] || [];
+
+    return new Promise((resolve, reject) => {
+        ytdl.getInfo(url, (e, info) => {
+            if (e) {
+                message.channel.send('Invalid YouTube URL.');
+                reject(e);
+            } else {
+                queues[message.guild.id].push({
+                    'url': url,
+                    'title': info.title,
+                    requester: message.author,
+                });
+                message.channel.send(`Enqueued **${info.title}**.`);
+                resolve();
+            }
+        });
+    });
 }
