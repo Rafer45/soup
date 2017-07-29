@@ -67,7 +67,7 @@ module.exports = {
         } else {
             const cb = '```';
             const qStr = q.map(elem => (
-                `${elem.title} - Requested by ${elem.requester}`
+                `${elem.title} - Requested by ${elem.requester.nickname}`
             )).join('\n');
             message.channel.send(`${cb}${qStr}${cb}`);
         }
@@ -148,7 +148,7 @@ function enqueue(message, url = '') {
                 queues[message.guild.id].push({
                     'url': url,
                     'title': info.title,
-                    requester: message.author,
+                    requester: message.member,
                 });
                 message.channel.send(`Enqueued **${info.title}**.`);
                 resolve();
