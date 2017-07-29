@@ -77,7 +77,7 @@ module.exports = {
         const voiceConn = message.guild.voiceConnection;
         if (voiceConn) {
             const dispatcher = voiceConn.dispatcher;
-            message.channel.send(`Volume is at \`${dispatcher.volume}%.\``);
+            message.channel.send(`Volume is at \`${dispatcher.volume * 50}%.\``);
         } else {
             message.channel.send('Volume can only be shown when playing music.');
         }
