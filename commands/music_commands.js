@@ -72,6 +72,28 @@ module.exports = {
             message.channel.send(`${cb}${qStr}${cb}`);
         }
     },
+
+    volumeshift: (message, config, _, n) => {
+        n = Number(n);
+        n = !isNaN(n) ? (n / 50) : 0;
+        const voiceConn = message.guild.voiceConnection;
+        if (voiceConn) {
+            const dispatcher = voiceConn.dispatcher;
+            const oldVol = dispatcher.volume;
+            const newVol = Math.max(0,
+                Math.min(2,
+                    clean(dispatcher.volume + n),
+                ),
+            );
+
+            dispatcher.setVolume(newVol);
+            message.channel.send(`Volume shifted by ${clean(newVol - oldVol) * 50}%. It is now ${clean(dispatcher.volume) * 50}%.`);
+        }
+
+        function clean(_n) {
+            return Math.round(_n * 10) / 10;
+        }
+    },
 };
 
 function dispatch(message, url, config, connection) {
