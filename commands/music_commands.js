@@ -141,21 +141,23 @@ function enqueue(message, url = '') {
 
     return new Promise((resolve, reject) => {
         if (!message.guild.voiceConnection && !message.author.voiceChannel) {
-            message.send('To play music, you or the bot must be in a voice channel.');
+            message.channel.send('To play music, you or the bot must be in a voice channel.');
+            reject();
+        } else {
+            ytdl.getInfo(url, (e, info) => {
+                if (e) {
+                    message.channel.send('Invalid YouTube URL.');
+                    reject(e);
+                } else {
+                    queues[message.guild.id].push({
+                        'url': url,
+                        'title': info.title,
+                        requester: message.member,
+                    });
+                    message.channel.send(`Enqueued **${info.title}**.`);
+                    resolve();
+                }
+            });
         }
-        ytdl.getInfo(url, (e, info) => {
-            if (e) {
-                message.channel.send('Invalid YouTube URL.');
-                reject(e);
-            } else {
-                queues[message.guild.id].push({
-                    'url': url,
-                    'title': info.title,
-                    requester: message.member,
-                });
-                message.channel.send(`Enqueued **${info.title}**.`);
-                resolve();
-            }
-        });
     });
 }
