@@ -142,7 +142,6 @@ function enqueue(message, url = '') {
     return new Promise((resolve, reject) => {
         if (!message.guild.voiceConnection && !message.member.voiceChannel) {
             message.channel.send('To play music, you or the bot must be in a voice channel.');
-            reject();
         } else {
             ytdl.getInfo(url, (e, info) => {
                 if (e) {
