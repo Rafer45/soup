@@ -63,7 +63,7 @@ module.exports = {
     queue: (message) => {
         const q = queues[message.guild.id] || [];
         if (q.length === 0) {
-            message.channel.send('Queue is empty');
+            message.channel.send('Queue is empty.');
         } else {
             const cb = '```';
             const qStr = q.map(elem => (
