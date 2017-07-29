@@ -57,13 +57,11 @@ module.exports = {
         n = Number(n);
         if (!Number.isInteger(n)) return message.channel.send('Invalid prune amount');
 
-        const i = n + 1;
-
         return message.channel.fetchMessages({ limit: 99 })
             .then((messages) => {
                 messages.array()
                     .filter(m => m.author.id === config.ids.soup)
-                    .slice(0, i)
+                    .slice(0, n)
                     .forEach(m => m.delete());
             });
     },
