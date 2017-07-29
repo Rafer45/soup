@@ -45,11 +45,11 @@ module.exports = {
     setdefaultvolume: (message, config, _, n) => {
         n = Number(n);
         n = !isNaN(n) ? n : 0.16;
-        config.music.volume = n;
+        config.music.volume = Math.max(0, Math.min(2, n));
         writeConfig(
             message,
             config,
-            `Volume successfully set to '${n}'.`,
+            `Default volume successfully set to '${config.music.volume}'.`,
         );
     },
 
