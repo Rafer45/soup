@@ -1,7 +1,13 @@
 
 module.exports = {
     effify: (message, _, msg) => {
-        const effify = (str) => {
+        if (!msg) {
+            message.channel.send('Provide some text to effify.');
+        } else {
+            message.channel.send(effify(msg));
+        }
+
+        function effify(str) {
             const dict = {
                 'á': 'a',
                 'é': 'e',
@@ -15,8 +21,6 @@ module.exports = {
             return str.replace(/[aeiouáéíóúü]/gi, char => (
                 `${char}f${dict[char.toLowerCase()] || char.toLowerCase()}`
             ));
-        };
-
-        message.channel.send(effify(msg));
+        }
     },
 };
