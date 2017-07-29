@@ -10,6 +10,8 @@ ${p}stop     - Interrupts the current song.
 ${p}queue    - Says the current queue.
 ${p}pleasestop - Clears the queue and interrupts the current song.
 ${p}clearqueue - Clears the queue.
+${p}volume      - Displays the volume.
+${p}volumeshift - Shifts the volume by a given percentage.
 
 ++ TESTING COMMANDS ++
 ${p}ping - Says "pong."
