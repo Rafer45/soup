@@ -140,9 +140,9 @@ function enqueue(message, url = '') {
     queues[message.guild.id] = queues[message.guild.id] || [];
 
     return new Promise((resolve, reject) => {
-        if (!message.guild.voiceConnection && !message.author.voiceChannel) {
+        if (!message.guild.voiceConnection && !message.member.voiceChannel) {
+            console.log()
             message.channel.send('To play music, you or the bot must be in a voice channel.');
-            reject();
         } else {
             ytdl.getInfo(url, (e, info) => {
                 if (e) {
