@@ -42,6 +42,17 @@ module.exports = {
         );
     },
 
+    setdefaultvolume: (message, config, _, n) => {
+        n = Number(n);
+        n = !isNaN(n) ? n : 0.16;
+        config.music.volume = n;
+        writeConfig(
+            message,
+            config,
+            `Volume successfully set to '${n}'.`,
+        );
+    },
+
     prune: (message, config, _, n) => {
         n = Number(n);
         if (!Number.isInteger(n)) return message.channel.send('Invalid prune amount');
