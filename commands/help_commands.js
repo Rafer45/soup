@@ -21,7 +21,7 @@ ${p}dice n - Says a random number between 1 and n. 6 is the default.
 ${p}factcheck fact - Uses advanced neural networks and quantum bubble extrapolation to calculate a fact's veracity. If no fact is provided, it will give a more general statement about the command user.
 
 ++ MISC. commands ++
-${p}effify - Try it.
+${p}effify text - Effifies some text.
 \`\`\``);
     },
 };
