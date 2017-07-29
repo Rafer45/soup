@@ -77,7 +77,7 @@ module.exports = {
         const voiceConn = message.guild.voiceConnection;
         if (voiceConn) {
             const dispatcher = voiceConn.dispatcher;
-            message.channel.send(`Volume is at ${dispatcher.volume}%.`);
+            message.channel.send(`Volume is at \`${dispatcher.volume}%.\``);
         } else {
             message.channel.send('Volume can only be shown when playing music.');
         }
@@ -97,7 +97,7 @@ module.exports = {
             );
 
             dispatcher.setVolume(newVol);
-            message.channel.send(`Volume shifted by ${clean(newVol - oldVol) * 50}%. It is now ${clean(dispatcher.volume) * 50}%.`);
+            message.channel.send(`Volume shifted by \`${clean(newVol - oldVol) * 50}%\`. It is now \`${clean(dispatcher.volume) * 50}%\`.`);
         } else {
             message.channel.send('Volume can only be shifted when playing music.');
         }
