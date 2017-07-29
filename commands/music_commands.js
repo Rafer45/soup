@@ -140,6 +140,9 @@ function enqueue(message, url = '') {
     queues[message.guild.id] = queues[message.guild.id] || [];
 
     return new Promise((resolve, reject) => {
+        if (!message.guild.voiceConnection && !message.author.voiceChannel) {
+            message.send('To play music, you or the bot must be in a voice channel.');
+        }
         ytdl.getInfo(url, (e, info) => {
             if (e) {
                 message.channel.send('Invalid YouTube URL.');
