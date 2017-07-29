@@ -73,6 +73,16 @@ module.exports = {
         }
     },
 
+    volume: (message) => {
+        const voiceConn = message.guild.voiceConnection;
+        if (voiceConn) {
+            const dispatcher = voiceConn.dispatcher;
+            message.channel.send(`Volume is at ${dispatcher.volume}%.`);
+        } else {
+            message.channel.send('Volume can only be shown when playing music.');
+        }
+    },
+
     volumeshift: (message, config, _, n) => {
         n = Number(n);
         n = !isNaN(n) ? (n / 50) : 0;
@@ -88,6 +98,8 @@ module.exports = {
 
             dispatcher.setVolume(newVol);
             message.channel.send(`Volume shifted by ${clean(newVol - oldVol) * 50}%. It is now ${clean(dispatcher.volume) * 50}%.`);
+        } else {
+            message.channel.send('Volume can only be shifted when playing music.');
         }
 
         function clean(_n) {
@@ -124,7 +136,7 @@ function dispatch(message, url, config, connection) {
     message.channel.send(`Playing song at url:\n${url}`);
 }
 
-function enqueue(message, url) {
+function enqueue(message, url = '') {
     queues[message.guild.id] = queues[message.guild.id] || [];
 
     return new Promise((resolve, reject) => {
