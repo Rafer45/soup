@@ -8,8 +8,9 @@ module.exports = {
 ${p}play URL - Plays a song at a YouTube URL.
 ${p}stop     - Interrupts the current song.
 ${p}queue    - Says the current queue.
-${p}pleasestop - Clears the queue and interrupts the current song.
 ${p}clearqueue - Clears the queue.
+${p}pleasestop - Clears the queue and interrupts the current song.
+${p}togglepause - Pauses (or resumes) the current stream.
 ${p}volume      - Displays the volume.
 ${p}volumeshift n - Shifts the volume by n%. (Negative numbers can be used to decrease volume).
 
