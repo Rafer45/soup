@@ -152,7 +152,7 @@ function enqueue(message, url = '') {
                     queues[message.guild.id].push({
                         'url': url,
                         'title': info.title,
-                        requester: message.member,
+                        'requester': message.member,
                     });
                     message.channel.send(`Enqueued **${info.title}** at <${url}>.`);
                     resolve();
