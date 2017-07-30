@@ -23,7 +23,7 @@ module.exports = {
                     .then(dispatch.bind(
                             null,
                             message,
-                            queues[message.guild.id].shift().url,
+                            queues[message.guild.id].shift(),
                             config,
                         ));
             })
@@ -108,8 +108,8 @@ module.exports = {
     },
 };
 
-function dispatch(message, url, config, connection) {
-    const stream = ytdl(url, {
+function dispatch(message, song, config, connection) {
+    const stream = ytdl(song.url, {
         filter: 'audioonly',
     });
     const dispatcher = connection.playStream(
@@ -122,7 +122,7 @@ function dispatch(message, url, config, connection) {
             setTimeout(() => {
                 dispatch(
                         message,
-                        queues[message.guild.id].shift().url,
+                        queues[message.guild.id].shift(),
                         config,
                         connection,
                     );
@@ -133,7 +133,7 @@ function dispatch(message, url, config, connection) {
             });
         }
     });
-    message.channel.send(`Playing song at url:\n${url}`);
+    message.channel.send(`Playing **${song.title}** at <${song.url}>`);
 }
 
 function enqueue(message, url = '') {
@@ -154,7 +154,7 @@ function enqueue(message, url = '') {
                         'title': info.title,
                         requester: message.member,
                     });
-                    message.channel.send(`Enqueued **${info.title}**.`);
+                    message.channel.send(`Enqueued **${info.title}** at <${url}>.`);
                     resolve();
                 }
             });
