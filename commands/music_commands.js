@@ -30,6 +30,20 @@ module.exports = {
             .catch(console.error);
     },
 
+    togglepause: (message) => {
+        const voiceConn = message.guild.voiceConnection;
+        if (voiceConn) {
+            const dispatcher = voiceConn.dispatcher;
+            if (dispatcher.paused) {
+                dispatcher.resume();
+                return message.channel.send('Resuming stream.');
+            }
+            dispatcher.pause();
+            return message.channel.send('Pausing stream.');
+        }
+        return message.channel.send('No music is playing.');
+    },
+
     stop: (message) => {
         const voiceConn = message.guild.voiceConnection;
         if (voiceConn) {
