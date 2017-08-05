@@ -8,9 +8,11 @@ const client = new Discord.Client();
 client.on('ready', () => {
     console.log('I am ready!');
     client.owner = client.users.get(config.ids.soupmaster);
-    const spam = client.channels.get(config.ids.spam_channel);
-
-    spam.send(`${client.owner}, soup is ready!`);
+    client.owner.createDM()
+        .then((c) => {
+            c.send('soup is ready!')
+        })
+        .catch(console.error);
 });
 
 client.on('message', (message) => {
