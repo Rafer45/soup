@@ -4,8 +4,15 @@ const ytdl = require('ytdl-core');
 const queues = {};
 
 module.exports = {
-    play: (message, config, _, url) => {
-        enqueue(message, url)
+    play: (message, config, _, ...urls) => {
+        let lastPromise;
+
+        urls.forEach((url) => {
+            console.log(url);
+            lastPromise = enqueue(message, url);
+        });
+
+        lastPromise
             .then(() => {
                 const voiceConn = message.guild.voiceConnection;
 
