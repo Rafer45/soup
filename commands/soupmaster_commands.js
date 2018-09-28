@@ -65,6 +65,8 @@ module.exports = {
                     .forEach(m => m.delete());
             });
     },
+
+    // TODO: Add addStaticCommand command here
 };
 
 function writeConfig(message, config, str) {
