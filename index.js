@@ -1,6 +1,8 @@
 
 const Discord = require('discord.js');
 const config = require('./config.json');
+
+// TODO: Use commands Collection instead of dictionary
 const commands = require('./commands.js');
 
 const client = new Discord.Client();
@@ -16,7 +18,8 @@ client.on('ready', () => {
 });
 
 client.on('message', (message) => {
-  // Ignore bot messages or messages not starting with prefix
+    
+    // Ignore bot messages or messages not starting with prefix
     if (!message.content.startsWith(config.prefix) || message.author.bot) return;
 
     const contents = message.content.slice(config.prefix.length);
