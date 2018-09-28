@@ -18,7 +18,10 @@ addCommands(...commandGroups);
 
 function addCommands(...objs) {
     objs.forEach((obj) => {
+        
+        // fn to apply on command is just identity by default
         const fn = obj.fn || (x => x);
+
         Object.keys(obj)
             .filter(x => x !== 'fn')
             .forEach((k) => {
